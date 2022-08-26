@@ -7,7 +7,6 @@ namespace Natural_Graphics_Primitives_UI.Services;
 
 public class SettingService
 {
-    private int _numberOfPoints;
     private string _dataPath { get; set; } = "settings.json";
 
     public SettingsModel Settings

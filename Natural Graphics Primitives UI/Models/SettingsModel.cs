@@ -3,4 +3,5 @@
 public class SettingsModel
 {
     public string NGPPath { get; set; }
+    public int SelectedResolution { get; set; }
 }

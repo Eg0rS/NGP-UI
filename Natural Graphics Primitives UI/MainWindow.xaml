@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ClipboardSpy"
         mc:Ignorable="d"
         Loaded="WindowLoaded"
+        Closing="WindowClosing"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
 
@@ -17,23 +18,24 @@
         <Border>
             <StackPanel>
                 <Button
-                    Content="Задать путь до нейросети"
-                    Click="GetClipboard"
-                    Margin="5" 
-                    Background="Red"/>
+                    Name="pathButton"
+                    Content="Задать расположение нейросети"
+                    Click="UpdatePath"
+                    Margin="5"
+                    Background="Red" />
 
                 <Separator />
                 <StackPanel
-                    Margin="2" 
+                    Margin="2"
                     Orientation="Horizontal"
-                    HorizontalAlignment = "Center">
+                    HorizontalAlignment="Center">
                     <Label>Разрешение модели</Label>
-                </StackPanel >
+                </StackPanel>
                 <Separator />
                 <StackPanel
                     Orientation="Horizontal">
                     <CheckBox
-                        Name="cbContainsAudio"
+                        Name="cbMinimal"
                         IsChecked="False"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
@@ -45,36 +47,35 @@
                 <StackPanel
                     Orientation="Horizontal">
                     <CheckBox
-                        Name="cbContainsFileDropList"
-                        IsEnabled="False"
+                        Name="cbSmall"
                         IsChecked="False"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
                         Click="Cb_OnClick"
                         Margin="4"
                         Padding="0,0,0,0" />
-                    <Label>2 (Среднее)</Label>
+                    <Label>2 (Маленькое)</Label>
                 </StackPanel>
                 <StackPanel
                     Orientation="Horizontal">
                     <CheckBox
-                        Name="cbContainsImage"
-                        IsEnabled="False"
+                        Name="cbMedium"
                         IsChecked="False"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
+                        Click="Cb_OnClick"
                         Margin="4"
                         Padding="0,0,0,0" />
-                    <Label>2 (Нормальное)</Label>
+                    <Label>2 (среднее)</Label>
                 </StackPanel>
                 <StackPanel
                     Orientation="Horizontal">
                     <CheckBox
-                        Name="cbContainsText"
-                        IsEnabled="False"
+                        Name="cbLarge"
                         IsChecked="False"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
+                        Click="Cb_OnClick"
                         Margin="4"
                         Padding="0,0,0,0" />
                     <Label>8 (Большое)</Label>
@@ -82,27 +83,33 @@
                 <StackPanel
                     Orientation="Horizontal">
                     <CheckBox
-                        Name="aa"
-                        IsEnabled="False"
+                        Name="cbMax"
                         IsChecked="False"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
+                        Click="Cb_OnClick"
                         Margin="4"
                         Padding="0,0,0,0" />
                     <Label>16 (Максимальное)</Label>
                 </StackPanel>
 
-
+                <Separator Margin="5" />
                 <Button
-                    Content="Сгеренировать карту погрешностей" 
-                    Click="CheckStatus"
+                    Name="generateButton"
+                    Content="Сгенерировать карту погрешностей"
+                    Click="GenerateErrorMap"
                     Margin="5" />
 
-                <Separator Margin="5" />
-
                 <Button
+                    Name="buildButton"
                     Content="Построить модель"
-                    Click="ClearClipboard"
+                    Click="BuildModel"
+                    Margin="5" />
+                <Separator Margin="5" />
+                <Button
+                    Name="cancelButton"
+                    Content="Отменить операцию"
+                    Click="Cancel"
                     Margin="5" />
 
             </StackPanel>
@@ -124,9 +131,12 @@
                 <TextBox
                     Name="tbInfo"
                     IsReadOnly="True"
+                    AutoWordSelection="True"
                     AcceptsReturn="True"
+                    TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto"
                     HorizontalScrollBarVisibility="Auto"
+                    TextChanged="TbInfo_OnTextChanged"
                     Grid.Row="1" />
             </Grid>
         </Border>
